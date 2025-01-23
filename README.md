@@ -78,6 +78,20 @@ and an OpenGL-based rendering engine, enabling efficient 3D rendering on Linux p
 It is essential to understand the Graphics stack in order to succesfully fuzz the GPU drivers. This helps
 an analyst to understand the kind of data that should be passed to the Graphics Driver.
 
+We aimed to fuzz the **proprietary Nvidia graphics driver** \& the **Nouveau Drivers** on Linux.
+
+## Our Experimental Setup
+![Environment Setup](media/System%20Specs.png)
+
+The host system ran Syzkaller alongside QEMU in userland, with KVM operating in kernel land. 
+The QEMU virtual machine (VM) was launched dynamically based on Syzkaller’s configuration file.
+The fuzzing process inside the VM required direct access 
+to the Nvidia GPU, which was facilitated through IOMMU and the VFIO driver. 
+KVM enabled the guest operating system, running inside the VM, to execute instructions directly 
+on the physical CPU. Additionally, it allocated memory to the guest OS via standard malloc() and 
+mmap() calls.
+
+
 ### About this repository
 This repository contains the supplementary information related to my Master’s Thesis, 
 which I completed under the supervision of [**Andrés Goens**](https://goens.org/) with 
